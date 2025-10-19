@@ -13,14 +13,22 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-
+    TextView myTextView;
+    EditText myEditText;
+    Button submitButton;
+    TextView myToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        TextView myTextView;
-        EditText myEditText;
-        Button submitButton;
+        setContentView(R.layout.activity_main);
+
+
+
+        myToast = (TextView) findViewById(R.id.greeting1t);
+
+
         myTextView = (TextView) findViewById(R.id.greeting);
         myEditText = (EditText) findViewById((R.id.typeName));
         submitButton = (Button) findViewById(R.id.SubmitButton);
@@ -29,11 +37,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = myEditText.getText().toString();
-                myTextView.setText("What is 5 + 5? :  "  + name);
+                if (name.equalsIgnoreCase("Y")) {
+                    myToast.setText("Excellent! Score - " + 100);
+                } else {
+                    myToast.setText("Try again Score - " + 0);
+                }
+
             }
 
 
         });
 
-    }
+
+}
 }
