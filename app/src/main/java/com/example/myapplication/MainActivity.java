@@ -36,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                submitButton.setText("Submit");
+                myTextView.setText(Question( 6, 6, 12));
                 String name = myEditText.getText().toString();
+
                 if (name.equalsIgnoreCase("Y")) {
                     myToast.setText("Excellent! Score - " + 100);
                 } else {

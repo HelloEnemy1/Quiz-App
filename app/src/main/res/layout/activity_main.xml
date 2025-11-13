@@ -11,7 +11,7 @@
         android:id="@+id/greeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Is 5 + 5 = 5? :  " />
+        android:text="" />
 
     <EditText
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         android:id="@+id/SubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ENTER"
+        android:text="Start"
         />
 
     <TextView
