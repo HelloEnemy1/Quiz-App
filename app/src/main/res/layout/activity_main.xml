@@ -26,6 +26,13 @@
         android:text="Start"
         />
 
+    <Button
+        android:id="@+id/SubmitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        />
+
     <TextView
         android:id="@+id/greeting1t"
         android:layout_width="wrap_content"

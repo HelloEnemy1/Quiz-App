@@ -17,6 +17,20 @@ public class MainActivity extends AppCompatActivity {
     EditText myEditText;
     Button submitButton;
     TextView myToast;
+
+    Question q;
+
+    Question a;
+
+    Question b;
+    Question c;
+    Question d;
+
+    int sum;
+
+    int qs;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -24,11 +38,16 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-
+int qs = 5;
+int sum = 0;
 
         myToast = (TextView) findViewById(R.id.greeting1t);
 
-
+        Question q = new Question(6, 6, 12);
+        Question a = new Question(5, 5, 10);
+        Question b = new Question(6, 5, 12);
+        Question c = new Question(8, 2, 13);
+        Question d = new Question(4, 8, 32);
         myTextView = (TextView) findViewById(R.id.greeting);
         myEditText = (EditText) findViewById((R.id.typeName));
         submitButton = (Button) findViewById(R.id.SubmitButton);
@@ -37,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 submitButton.setText("Submit");
-                myTextView.setText(Question( 6, 6, 12));
+                myTextView.setText(q.getQuestion());
                 String name = myEditText.getText().toString();
 
                 if (name.equalsIgnoreCase("Y")) {
@@ -50,6 +69,78 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitButton.setText("Submit");
+                myTextView.setText(a.getQuestion());
+                String name = myEditText.getText().toString();
+
+                if (name.equalsIgnoreCase("Y")) {
+                    myToast.setText("Excellent! Score - " + 100);
+                } else {
+                    myToast.setText("Try again Score - " + 0);
+                }
+
+            }
+
+
+        });
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitButton.setText("Submit");
+                myTextView.setText(b.getQuestion());
+                String name = myEditText.getText().toString();
+
+                if (name.equalsIgnoreCase("Y")) {
+                    myToast.setText("Excellent! Score - " + 100);
+                } else {
+                    myToast.setText("Try again Score - " + 0);
+                }
+
+            }
+
+
+        });
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitButton.setText("Submit");
+                myTextView.setText(c.getQuestion());
+                String name = myEditText.getText().toString();
+
+                if (name.equalsIgnoreCase("Y")) {
+                    myToast.setText("Excellent! Score - " + 100);
+                } else {
+                    myToast.setText("Try again Score - " + sum / qs);
+                }
+
+            }
+
+
+        });
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitButton.setText("Submit");
+                myTextView.setText(d.getQuestion());
+                String name = myEditText.getText().toString();
+
+                if (name.equalsIgnoreCase("Y")) {
+                    myToast.setText("Excellent! Score - " + 100);
+                } else {
+                    myToast.setText("Try again Score - " + 0);
+                }
+
+            }
+
+
+        });
+
+
+
 
 
     }
