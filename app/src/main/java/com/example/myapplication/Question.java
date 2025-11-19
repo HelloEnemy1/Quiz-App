@@ -14,4 +14,8 @@ public class Question {
     public String getQuestion() {
         return "Is " + a + " + " + b + " = " + c  + "?";
     }
+
+    public boolean getAnswer() {
+        return (a + b) == c;
+    }
 }

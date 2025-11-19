@@ -16,132 +16,127 @@ public class MainActivity extends AppCompatActivity {
     TextView myTextView;
     EditText myEditText;
     Button submitButton;
+    Button resetButton;
     TextView myToast;
 
-    Question q;
-
-    Question a;
-
-    Question b;
-    Question c;
-    Question d;
-
-    int sum;
-
-    int qs;
-
+    Question[] questions;
+    int currentQuestionIndex = 0;
+    int sum = 0;
+    int qs = 5;
+    String originalTextViewText = "";
+    String originalToastText = "";
+    boolean quizStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-int qs = 5;
-int sum = 0;
+
+        questions = new Question[5];
+        generateRandomQuestions();
 
         myToast = (TextView) findViewById(R.id.greeting1t);
-
-        Question q = new Question(6, 6, 12);
-        Question a = new Question(5, 5, 10);
-        Question b = new Question(6, 5, 12);
-        Question c = new Question(8, 2, 13);
-        Question d = new Question(4, 8, 32);
         myTextView = (TextView) findViewById(R.id.greeting);
         myEditText = (EditText) findViewById((R.id.typeName));
         submitButton = (Button) findViewById(R.id.SubmitButton);
+        resetButton = (Button) findViewById(R.id.Reset);
+
+
+        originalTextViewText = myTextView.getText().toString();
+        originalToastText = myToast.getText().toString();
+
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitButton.setText("Submit");
-                myTextView.setText(q.getQuestion());
-                String name = myEditText.getText().toString();
 
-                if (name.equalsIgnoreCase("Y")) {
-                    myToast.setText("Excellent! Score - " + 100);
-                } else {
-                    myToast.setText("Try again Score - " + 0);
+                if (!quizStarted) {
+                    quizStarted = true;
+                    submitButton.setText("Submit");
+                    myTextView.setText(questions[currentQuestionIndex].getQuestion());
+                    return;
                 }
 
+                String answer = myEditText.getText().toString();
+
+                // Check answer (Y for true, N for false)
+                boolean correctAnswer = questions[currentQuestionIndex].getAnswer();
+
+                if (answer.equalsIgnoreCase("Y") && correctAnswer) {
+                    myToast.setText("Excellent!");
+                    sum += 100;
+                } else if (answer.equalsIgnoreCase("N") && !correctAnswer) {
+                    myToast.setText("Excellent!");
+                    sum += 100;
+                } else if (answer.equalsIgnoreCase("Y") || answer.equalsIgnoreCase("N")) {
+                    myToast.setText("Wrong!");
+                } else {
+                    myToast.setText("Please enter Y or N!");
+                    return;
+                }
+
+
+                currentQuestionIndex++;
+
+                if (currentQuestionIndex < questions.length) {
+                    myTextView.setText(questions[currentQuestionIndex].getQuestion());
+                    myEditText.setText("");
+                } else {
+                    // All questions answered
+                    int finalScore = sum / qs;
+                    myToast.setText("Quiz Complete! Final Score - " + finalScore);
+                    submitButton.setEnabled(false);
+                }
             }
-
-
         });
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitButton.setText("Submit");
-                myTextView.setText(a.getQuestion());
-                String name = myEditText.getText().toString();
 
-                if (name.equalsIgnoreCase("Y")) {
-                    myToast.setText("Excellent! Score - " + 100);
-                } else {
-                    myToast.setText("Try again Score - " + 0);
-                }
+                currentQuestionIndex = 0;
+                sum = 0;
+                quizStarted = false;
 
+                myEditText.setText("");
+
+
+                myTextView.setText(originalTextViewText);
+                myToast.setText(originalToastText);
+
+
+                submitButton.setText("Start");
+
+
+                generateRandomQuestions();
+
+                submitButton.setEnabled(true);
             }
-
-
         });
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitButton.setText("Submit");
-                myTextView.setText(b.getQuestion());
-                String name = myEditText.getText().toString();
+    }
 
-                if (name.equalsIgnoreCase("Y")) {
-                    myToast.setText("Excellent! Score - " + 100);
-                } else {
-                    myToast.setText("Try again Score - " + 0);
-                }
 
+    private void generateRandomQuestions() {
+        for (int i = 0; i < 5; i++) {
+            int num1 = (int)(Math.random() * 10) + 1; // Random number 1-10
+            int num2 = (int)(Math.random() * 10) + 1;
+            int correctSum = num1 + num2;
+
+
+            if (Math.random() < 0.5) {
+
+                questions[i] = new Question(num1, num2, correctSum);
+            } else {
+
+                int offset = (int)(Math.random() * 3) + 1;
+                int wrongSum = Math.random() < 0.5 ? correctSum + offset : correctSum - offset;
+                // Make sure wrong sum is positive
+                if (wrongSum < 1) wrongSum = correctSum + offset;
+                questions[i] = new Question(num1, num2, wrongSum);
             }
-
-
-        });
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitButton.setText("Submit");
-                myTextView.setText(c.getQuestion());
-                String name = myEditText.getText().toString();
-
-                if (name.equalsIgnoreCase("Y")) {
-                    myToast.setText("Excellent! Score - " + 100);
-                } else {
-                    myToast.setText("Try again Score - " + sum / qs);
-                }
-
-            }
-
-
-        });
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitButton.setText("Submit");
-                myTextView.setText(d.getQuestion());
-                String name = myEditText.getText().toString();
-
-                if (name.equalsIgnoreCase("Y")) {
-                    myToast.setText("Excellent! Score - " + 100);
-                } else {
-                    myToast.setText("Try again Score - " + 0);
-                }
-
-            }
-
-
-        });
-
-
-
-
-
+        }
     }
 }
