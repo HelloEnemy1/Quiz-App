@@ -18,4 +18,10 @@ public class Question {
     public boolean getAnswer() {
         return (a + b) == c;
     }
+
+    public String getHint() {
+        int actualSum = a + b;
+        return "The actual sum of " + a + " + " + b + " is " + actualSum + ". Compare this to " + c + "!";
+    }
+
 }

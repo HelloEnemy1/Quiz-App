@@ -1,5 +1,8 @@
 package com.example.myapplication;
 
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,11 +15,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
     TextView myTextView;
     EditText myEditText;
     Button submitButton;
     Button resetButton;
+    Button hintButton;
+    Button englishButton;
+    Button arabicButton;
     TextView myToast;
 
     Question[] questions;
@@ -42,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         myEditText = (EditText) findViewById((R.id.typeName));
         submitButton = (Button) findViewById(R.id.SubmitButton);
         resetButton = (Button) findViewById(R.id.Reset);
+        hintButton = (Button) findViewById(R.id.HintButton);
+        englishButton = (Button) findViewById(R.id.EnglishButton);
+        arabicButton = (Button) findViewById(R.id.ArabicButton);
 
 
         originalTextViewText = myTextView.getText().toString();
@@ -54,8 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!quizStarted) {
                     quizStarted = true;
-                    submitButton.setText("Submit");
+                    submitButton.setText(R.string.button_submit);
                     myTextView.setText(questions[currentQuestionIndex].getQuestion());
+                    hintButton.setVisibility(View.VISIBLE);
                     return;
                 }
 
@@ -65,15 +77,15 @@ public class MainActivity extends AppCompatActivity {
                 boolean correctAnswer = questions[currentQuestionIndex].getAnswer();
 
                 if (answer.equalsIgnoreCase("Y") && correctAnswer) {
-                    myToast.setText("Excellent!");
+                    myToast.setText(R.string.feedback_excellent);
                     sum += 100;
                 } else if (answer.equalsIgnoreCase("N") && !correctAnswer) {
-                    myToast.setText("Excellent!");
+                    myToast.setText(R.string.feedback_excellent);
                     sum += 100;
                 } else if (answer.equalsIgnoreCase("Y") || answer.equalsIgnoreCase("N")) {
-                    myToast.setText("Wrong!");
+                    myToast.setText(R.string.feedback_wrong);
                 } else {
-                    myToast.setText("Please enter Y or N!");
+                    myToast.setText(R.string.feedback_invalid);
                     return;
                 }
 
@@ -84,10 +96,15 @@ public class MainActivity extends AppCompatActivity {
                     myTextView.setText(questions[currentQuestionIndex].getQuestion());
                     myEditText.setText("");
                 } else {
-                    // All questions answered
+                    // All questions answered - launch Results
                     int finalScore = sum / qs;
-                    myToast.setText("Quiz Complete! Final Score - " + finalScore);
-                    submitButton.setEnabled(false);
+                    Intent intent = new Intent(MainActivity.this, Results.class);
+                    intent.putExtra("FINAL_SCORE", finalScore);
+                    intent.putExtra("TOTAL_QUESTIONS", qs);
+                    startActivity(intent);
+
+                    // Reset the quiz for when user returns
+                    resetQuiz();
                 }
             }
         });
@@ -96,26 +113,64 @@ public class MainActivity extends AppCompatActivity {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                currentQuestionIndex = 0;
-                sum = 0;
-                quizStarted = false;
-
-                myEditText.setText("");
-
-
-                myTextView.setText(originalTextViewText);
-                myToast.setText(originalToastText);
-
-
-                submitButton.setText("Start");
-
-
-                generateRandomQuestions();
-
-                submitButton.setEnabled(true);
+                resetQuiz();
             }
         });
+
+        hintButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (quizStarted && currentQuestionIndex < questions.length) {
+                    Intent hintIntent = new Intent(MainActivity.this, ViewHintActivity.class);
+                    hintIntent.putExtra("HINT", questions[currentQuestionIndex].getHint());
+                    startActivity(hintIntent);
+                }
+            }
+        });
+
+        englishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocale("en");
+            }
+        });
+
+        arabicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocale("ar");
+            }
+        });
+    }
+
+    private void setLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+
+        // Recreate activity to apply changes
+        recreate();
+    }
+
+    private void resetQuiz() {
+        currentQuestionIndex = 0;
+        sum = 0;
+        quizStarted = false;
+
+        myEditText.setText("");
+
+        myTextView.setText(originalTextViewText);
+        myToast.setText(originalToastText);
+
+        submitButton.setText(R.string.button_start);
+        hintButton.setVisibility(View.GONE);
+
+        generateRandomQuestions();
+
+        submitButton.setEnabled(true);
     }
 
 

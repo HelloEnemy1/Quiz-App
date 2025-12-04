@@ -1,3 +1,32 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Quiz App</string>
+
+    <!-- Main Activity Strings -->
+    <string name="hint_type_yn">Type Y / N!</string>
+    <string name="button_start">Start</string>
+    <string name="button_submit">Submit</string>
+    <string name="button_reset">Reset</string>
+    <string name="feedback_excellent">Excellent!</string>
+    <string name="feedback_wrong">Wrong!</string>
+    <string name="feedback_invalid">Please enter Y or N!</string>
+
+    <!-- Hint Activity Strings -->
+    <string name="hint_title">💡 Hint</string>
+    <string name="button_hint">Hint</string>
+    <string name="button_back">Back to Quiz</string>
+    <string name="no_hint_available">No hint available</string>
+    <string name="hint_addition">Try adding the two numbers together and compare to the result!</string>
+
+    <!-- Results Activity Strings -->
+    <string name="quiz_complete">Quiz Complete!</string>
+    <string name="your_score">Your Score: %1$d/%2$d</string>
+    <string name="message_excellent">🎉 Excellent work!</string>
+    <string name="message_good">👍 Good job!</string>
+    <string name="message_keep_practicing">📚 Keep practicing!</string>
+    <string name="message_dont_give_up">💪 Don\'t give up!</string>
+    <string name="button_try_again">Try Again</string>
+    <string name="button_email_score">Email Score</string>
+    <string name="email_subject">My Quiz Score</string>
+    <string name="email_body">I completed the math quiz and got a score of %1$d out of %2$d!</string>
+    <string name="email_chooser_title">Send score via...</string>
 </resources>

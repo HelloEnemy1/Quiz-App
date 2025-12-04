@@ -4,17 +4,41 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/gradient_background"
     android:padding="24dp"
     android:layout_marginTop="-80dp">
-    <TextView
-        android:id="@+id/greeting1t"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
         android:gravity="center"
-        android:text=""
-        android:textColor="#374151"
-        android:textSize="20sp" />
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/EnglishButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="English"
+            android:textSize="14sp"
+            app:cornerRadius="8dp"
+            app:backgroundTint="#3B82F6"
+            android:elevation="2dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ArabicButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="العربية"
+            android:textSize="14sp"
+            app:cornerRadius="8dp"
+            app:backgroundTint="#3B82F6"
+            android:elevation="2dp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/greeting"
@@ -52,7 +76,7 @@
                     android:id="@+id/typeName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Type Y / N!"
+                    android:hint="@string/hint_type_yn"
                     android:textSize="18sp"
                     android:padding="16dp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -70,7 +94,7 @@
                     android:layout_height="60dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:text="Start"
+                    android:text="@string/button_start"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:cornerRadius="12dp"
@@ -83,7 +107,7 @@
                     android:layout_height="60dp"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    android:text="Reset"
+                    android:text="@string/button_reset"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:cornerRadius="12dp"
@@ -91,8 +115,30 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:elevation="4dp" />
             </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/HintButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/button_hint"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp"
+                app:backgroundTint="#F59E0B"
+                android:visibility="gone"
+                android:elevation="4dp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <TextView
+        android:id="@+id/greeting1t"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="20sp"
+        android:textColor="#374151"
+        android:layout_marginTop="24dp"
+        android:gravity="center" />
 
 </LinearLayout>
