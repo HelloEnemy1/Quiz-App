@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (answer.equalsIgnoreCase("Y") && correctAnswer) {
                     myToast.setText(R.string.feedback_excellent);
-                    sum += 100;
+                    sum += 1;
                 } else if (answer.equalsIgnoreCase("N") && !correctAnswer) {
                     myToast.setText(R.string.feedback_excellent);
-                    sum += 100;
+                    sum += 1;
                 } else if (answer.equalsIgnoreCase("Y") || answer.equalsIgnoreCase("N")) {
                     myToast.setText(R.string.feedback_wrong);
                 } else {
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     myEditText.setText("");
                 } else {
                     // All questions answered - launch Results
-                    int finalScore = sum / qs;
+                    int finalScore = sum / 5;
                     Intent intent = new Intent(MainActivity.this, Results.class);
                     intent.putExtra("FINAL_SCORE", finalScore);
                     intent.putExtra("TOTAL_QUESTIONS", qs);
