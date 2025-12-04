@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/gradient_background"
+
     android:padding="24dp"
     android:layout_marginTop="-80dp">
 
@@ -63,6 +63,20 @@
                 android:paddingEnd="32dp"
                 app:cornerRadius="12dp"
                 app:backgroundTint="#9333EA"
+                android:elevation="4dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/emailButton"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/button_email_score"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                app:cornerRadius="12dp"
+                app:backgroundTint="#10B981"
                 android:elevation="4dp" />
 
         </LinearLayout>

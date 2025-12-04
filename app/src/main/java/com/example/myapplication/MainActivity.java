@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -38,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Load saved language preference
+        loadLocale();
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
@@ -151,8 +156,25 @@ public class MainActivity extends AppCompatActivity {
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
 
+        // Save language preference
+        SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("My_Lang", languageCode);
+        editor.apply();
+
         // Recreate activity to apply changes
         recreate();
+    }
+
+    private void loadLocale() {
+        SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
+        String language = prefs.getString("My_Lang", "en");
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 
     private void resetQuiz() {
