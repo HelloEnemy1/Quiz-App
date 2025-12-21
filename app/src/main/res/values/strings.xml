@@ -19,7 +19,7 @@
 
     <!-- Results Activity Strings -->
     <string name="quiz_complete">Quiz Complete!</string>
-    <string name="your_score">Your Score: %1$d/%2$d</string>
+    <string name="your_score">Your Score: %1$s</string>
     <string name="message_excellent">🎉 Excellent work!</string>
     <string name="message_good">👍 Good job!</string>
     <string name="message_keep_practicing">📚 Keep practicing!</string>
@@ -27,6 +27,5 @@
     <string name="button_try_again">Try Again</string>
     <string name="button_email_score">Email Score</string>
     <string name="email_subject">My Quiz Score</string>
-    <string name="email_body">I completed the math quiz and got a score of %1$d out of %2$d!</string>
-    <string name="email_chooser_title">Send score via...</string>
+    <string name="email_body">I completed the math quiz and got a score of %1$s!</string>    <string name="email_chooser_title">Send score via...</string>
 </resources>

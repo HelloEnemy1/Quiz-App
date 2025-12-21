@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -18,9 +17,14 @@ public class ViewHintActivity extends AppCompatActivity {
     TextView hintText;
     Button backButton;
 
+    PreferencesHelper prefsHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Create preferences helper
+        prefsHelper = new PreferencesHelper(this);
 
         // Load saved language preference
         loadLocale();
@@ -50,8 +54,7 @@ public class ViewHintActivity extends AppCompatActivity {
     }
 
     private void loadLocale() {
-        SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
-        String language = prefs.getString("My_Lang", "en");
+        String language = prefsHelper.getLanguage();
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
         Resources resources = getResources();

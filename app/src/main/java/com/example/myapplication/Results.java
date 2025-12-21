@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -20,9 +19,18 @@ public class Results extends AppCompatActivity {
     Button restartButton;
     Button emailButton;
 
+    PreferencesHelper prefsHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Create preferences helper FIRST
+        prefsHelper = new PreferencesHelper(this);
+
+        // Load saved language preference
+        loadLocale();
+
         setContentView(R.layout.activity_results);
 
         scoreText = findViewById(R.id.scoreText);
@@ -35,8 +43,16 @@ public class Results extends AppCompatActivity {
         int finalScore = intent.getIntExtra("FINAL_SCORE", 0);
         int totalQuestions = intent.getIntExtra("TOTAL_QUESTIONS", 5);
 
-        // Display the score
-        scoreText.setText(getString(R.string.your_score, finalScore, totalQuestions * 100));
+        // Save high score and increment quiz count
+        try {
+            prefsHelper.setHighScore(finalScore);
+            prefsHelper.incrementQuizCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Display the score as percentage
+        scoreText.setText(getString(R.string.your_score, finalScore + "%"));
 
         // Display a message based on performance
         String message;
@@ -73,7 +89,7 @@ public class Results extends AppCompatActivity {
 
     private void sendEmailWithScore(int score, int total) {
         String subject = getString(R.string.email_subject);
-        String body = getString(R.string.email_body, score, total * 100);
+        String body = getString(R.string.email_body, score + "%");
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setType("message/rfc822");
@@ -86,5 +102,15 @@ public class Results extends AppCompatActivity {
         } catch (android.content.ActivityNotFoundException ex) {
             // Handle case where no email app is available
         }
+    }
+
+    private void loadLocale() {
+        String language = prefsHelper.getLanguage();
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }

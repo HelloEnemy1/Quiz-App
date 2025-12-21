@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">تطبيق الاختبار</string>
+
+    <!-- Main Activity Strings -->
+    <string name="hint_type_yn">اكتب ن / ل!</string>
+    <string name="button_start">ابدأ</string>
+    <string name="button_submit">إرسال</string>
+    <string name="button_reset">إعادة تعيين</string>
+    <string name="feedback_excellent">ممتاز!</string>
+    <string name="feedback_wrong">خطأ!</string>
+    <string name="feedback_invalid">الرجاء إدخال ن أو ل!</string>
+
+    <!-- Hint Activity Strings -->
+    <string name="hint_title">💡 تلميح</string>
+    <string name="button_hint">تلميح</string>
+    <string name="button_back">العودة إلى الاختبار</string>
+    <string name="no_hint_available">لا يوجد تلميح متاح</string>
+    <string name="hint_addition">حاول جمع الرقمين معًا وقارن بالنتيجة!</string>
+
+    <!-- Results Activity Strings -->
+    <string name="quiz_complete">الاختبار مكتمل!</string>
+    <string name="your_score">نتيجتك: %1$s</string>
+    <string name="message_excellent">🎉 عمل ممتاز!</string>
+    <string name="message_good">👍 عمل جيد!</string>
+    <string name="message_keep_practicing">📚 استمر في التدريب!</string>
+    <string name="message_dont_give_up">💪 لا تستسلم!</string>
+    <string name="button_try_again">حاول مرة أخرى</string>
+    <string name="button_email_score">إرسال النتيجة بالبريد</string>
+    <string name="email_subject">نتيجتي في الاختبار</string>
+    <string name="email_body">لقد أكملت اختبار الرياضيات وحصلت على %1$s!</string>
+    <string name="email_chooser_title">إرسال النتيجة عبر...</string>
+</resources>
+

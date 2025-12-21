@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -36,9 +35,14 @@ public class MainActivity extends AppCompatActivity {
     String originalToastText = "";
     boolean quizStarted = false;
 
+    PreferencesHelper prefsHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Create preferences helper
+        prefsHelper = new PreferencesHelper(this);
 
         // Load saved language preference
         loadLocale();
@@ -83,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (answer.equalsIgnoreCase("Y") && correctAnswer) {
                     myToast.setText(R.string.feedback_excellent);
-                    sum += 1;
+                    sum += 100;
                 } else if (answer.equalsIgnoreCase("N") && !correctAnswer) {
                     myToast.setText(R.string.feedback_excellent);
-                    sum += 1;
+                    sum += 100;
                 } else if (answer.equalsIgnoreCase("Y") || answer.equalsIgnoreCase("N")) {
                     myToast.setText(R.string.feedback_wrong);
                 } else {
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     myEditText.setText("");
                 } else {
                     // All questions answered - launch Results
-                    int finalScore = sum / 5;
+                    int finalScore = sum / qs;
                     Intent intent = new Intent(MainActivity.this, Results.class);
                     intent.putExtra("FINAL_SCORE", finalScore);
                     intent.putExtra("TOTAL_QUESTIONS", qs);
@@ -136,45 +140,18 @@ public class MainActivity extends AppCompatActivity {
         englishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setLocale("en");
+                prefsHelper.setLanguage("en");
+                recreate();
             }
         });
 
         arabicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setLocale("ar");
+                prefsHelper.setLanguage("ar");
+                recreate();
             }
         });
-    }
-
-    private void setLocale(String languageCode) {
-        Locale locale = new Locale(languageCode);
-        Locale.setDefault(locale);
-        Resources resources = getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
-
-        // Save language preference
-        SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("My_Lang", languageCode);
-        editor.apply();
-
-        // Recreate activity to apply changes
-        recreate();
-    }
-
-    private void loadLocale() {
-        SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
-        String language = prefs.getString("My_Lang", "en");
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-        Resources resources = getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 
     private void resetQuiz() {
@@ -193,6 +170,16 @@ public class MainActivity extends AppCompatActivity {
         generateRandomQuestions();
 
         submitButton.setEnabled(true);
+    }
+
+    private void loadLocale() {
+        String language = prefsHelper.getLanguage();
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 
 
