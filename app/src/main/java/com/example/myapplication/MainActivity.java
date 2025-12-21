@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     int finalScore = sum / qs;
                     Intent intent = new Intent(MainActivity.this, Results.class);
                     intent.putExtra("FINAL_SCORE", finalScore);
-                    intent.putExtra("TOTAL_QUESTIONS", qs);
+                    intent.putExtra("TOTAL_QUESTIONS", 1);
                     startActivity(intent);
 
                     // Reset the quiz for when user returns
